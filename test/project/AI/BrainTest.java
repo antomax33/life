@@ -9,7 +9,7 @@ class BrainTest {
     @Test
     void classique(){
 
-        Thinkable thinkable = new Brain(2);
+        Thinkable thinkable = new Brain(2, 2);
         thinkable.nextAction(new Double[] {1d, 2d});
         DMatrix matrix = MatrixUtil.randn(5,3);
     }
@@ -34,15 +34,27 @@ class BrainTest {
     void example2(){
         DMatrix b = new DMatrix();
         b.addColumn(0.2,0.4, 0.8);
-        b.addColumn(0.2,0.5, 0.8);
+        //b.addColumn(0.2,0.5, 0.8);
 
         DMatrix w = new DMatrix();
         w.addColumn(1.4, 1.1,0.5);
-        w.addColumn(0.4, 0.3,0.3);
+        //w.addColumn(0.4, 0.3,0.3);
 
         Brain brain = new Brain(w,b);
         Double[] information = new Double[]{0.2,0.4, 0.8};
         brain.nextAction(information);
+    }
+
+    @Test
+    void array(){
+        double[] a = Math2.randomArray(5);
+        Math2.printArray(a, "a");
+
+        double[][] b = Math2.randomArray(5,4);
+        Math2.printArray(b, "b");
+
+        double[][][] c = Math2.randomArray(5,3,7);
+        Math2.printArray(c, "c");
     }
 
 }
