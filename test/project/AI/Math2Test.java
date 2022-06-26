@@ -20,5 +20,12 @@ class Math2Test {
         d[0][0][0] += 5;
 
         assertEquals(c[0][0][0] + 5, d[0][0][0]);
+
+
+        double[] e = Math2.randomArray(5);
+        double[] f = Math2.clone(e);
+        f[0] += 1;
+
+        assertEquals(e[0] + 1, f[0]);
     }
 }

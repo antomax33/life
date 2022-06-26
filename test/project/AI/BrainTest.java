@@ -1,48 +1,28 @@
 package project.AI;
 
-import main.java.matrices.DMatrix;
 import project.matrix.MatrixUtil;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BrainTest {
 
     @Test
     void classique(){
 
-        Thinkable thinkable = new Brain(2, 2);
-        thinkable.nextAction(new Double[] {1d, 2d});
-        DMatrix matrix = MatrixUtil.randn(5,3);
+        Thinkable thinkable = new Brain(2, 7);
+        thinkable.nextAction(new double[] {1d, 2d});
     }
 
 
     @Test
     void example1(){
-        DMatrix b = new DMatrix();
-        b.addColumn(0.2,0.4);
-        b.addColumn(0.2,0.5);
+        Brain a = new Brain(2,4);
 
-        DMatrix w = new DMatrix();
-        w.addColumn(1.4, 0.3);
-        w.addColumn(0.4, 1.1);
-
-        Brain brain = new Brain(w,b);
-        Double[] information = new Double[]{0.2,0.4};
-        brain.nextAction(information);
+        new Brain(a);
     }
 
     @Test
     void example2(){
-        DMatrix b = new DMatrix();
-        b.addColumn(0.2,0.4, 0.8);
-        //b.addColumn(0.2,0.5, 0.8);
-
-        DMatrix w = new DMatrix();
-        w.addColumn(1.4, 1.1,0.5);
-        //w.addColumn(0.4, 0.3,0.3);
-
-        Brain brain = new Brain(w,b);
-        Double[] information = new Double[]{0.2,0.4, 0.8};
-        brain.nextAction(information);
     }
 
     @Test
@@ -55,6 +35,23 @@ class BrainTest {
 
         double[][][] c = Math2.randomArray(5,3,7);
         Math2.printArray(c, "c");
+    }
+
+
+    @Test
+    void concreteExample(){
+        double[][] biais = new double[][]{{0.2, 0.4}};
+        double[] finalBiais = new double[]{0.4};
+
+        double[][][] weight = new double[][][]{
+                {{1.4,0.4},{0.3,1.1}}
+        };
+        double[][] finalWeight = new double[][]{{0.4,0.7}};
+
+        Brain brain = new Brain(weight, biais, finalWeight, finalBiais);
+        double answer = brain.testBrain(new double[]{0.2, 0.4});
+
+        assertEquals(0.76111, answer, 1e-4);
     }
 
 }

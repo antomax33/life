@@ -66,11 +66,14 @@ public class Math2 {
     }
 
     public static void printArray(double[][][] array, String name){
-        System.out.println(name + "size :" + array.length + " " + array[0].length + " " +
+        System.out.println(name + " size :" + array.length + " " + array[0].length + " " +
                 array[0][0].length);
         System.out.println(arrayToString(array));
     }
 
+    public static double[] clone(double[] array){
+        return array.clone();
+    }
     public static double[][] clone(double[][] array){
 
         double[][] clone = new double[array.length][];

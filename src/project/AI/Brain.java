@@ -1,19 +1,33 @@
 package project.AI;
 
-import main.java.matrices.DMatrix;
 import project.life.Action;
-import project.matrix.MatrixUtil;
 
 public final class Brain implements Thinkable {
 
-    //private final int height;
-    //private final int width;
+    private final int height;
+    private final int width;
 
-    // Weights
-    private double w[][][];
-    private double valeur[][];
-    private double output[];
-    private double b[][];
+    // Weights (width, height, height).
+    private final double[][][] weight;
+    // Biais (width, height).
+    private final double[][] biais;
+    // Weight for the last connection.
+    private final double[][] finalWeight;
+    // Biais for the last connection.
+    private final double[] finalBiais;
+
+    /**
+     * Provide an action
+     *
+     * @param information information to treat like view on food or wall.
+     * @return future action.
+     */
+    @Override
+    public Action nextAction(double[] information) {
+
+        transmitInformation(information);
+        return null;
+    }
 
     /**
      * To create a brain of a certain height and width.
@@ -22,7 +36,8 @@ public final class Brain implements Thinkable {
      * @param width width of the machine learning.
      */
     public Brain (int height, int width){
-        this(MatrixUtil.randn(height,width), MatrixUtil.randn(height,width));
+        this(Math2.randomArray(width,height,height), Math2.randomArray(width, height),
+                Math2.randomArray(width, height), Math2.randomArray(height));
     }
 
     /**
@@ -31,10 +46,31 @@ public final class Brain implements Thinkable {
      * @param weight weight
      * @param biais biais
      */
-    public Brain(DMatrix weight, DMatrix biais){
-        if(!(1 <= weight.height() && 1 <= weight.width() &&
-                weight.width()==biais.width() && weight.height() == biais.height()))
+    public Brain(double[][][] weight, double[][] biais, double[][] finalWeight, double[] finalBiais){
+        // Weights (width, height,height)
+        // Biais (width, height)
+        if(!(0 < weight.length &&
+             0 < weight[0].length &&
+             0 < biais.length &&
+             0 < biais[0].length &&
+
+            0 < finalWeight.length &&
+            0 < finalWeight[0].length &&
+            0 < finalBiais.length &&
+
+             weight[0].length == weight[0][0].length &&
+             weight[0].length == biais[0].length &&
+             weight.length == biais.length))
             throw new IllegalArgumentException();
+
+        this.weight = weight;
+        this.biais = biais;
+
+        this.finalWeight = finalWeight;
+        this.finalBiais = finalBiais;
+
+        this.width = biais.length;
+        this.height = biais[0].length;
     }
 
     /**
@@ -43,7 +79,8 @@ public final class Brain implements Thinkable {
      * @param brain old brain
      */
     public Brain(Brain brain){
-        this(brain.getWeights(), brain.getBiais());
+        this(brain.getWeights(), brain.getBiais(),
+                brain.getFinalWeight(), brain.getFinalBiais());
     }
 
     /**
@@ -51,8 +88,8 @@ public final class Brain implements Thinkable {
      *
      * @return a copy of the weights.
      */
-    public DMatrix getWeights(){
-        return null;
+    public double[][][] getWeights(){
+        return Math2.clone(weight);
     }
 
     /**
@@ -60,21 +97,16 @@ public final class Brain implements Thinkable {
      *
      * @return a copy of the biais.
      */
-    public DMatrix getBiais(){
-        return null;
+    public double[][] getBiais(){
+        return Math2.clone(biais);
     }
 
-    /**
-     * Provide an action
-     *
-     * @param information information to treat like view on food or wall.
-     * @return futur action
-     */
-    @Override
-    public Action nextAction(Double[] information) {
+    public double[][] getFinalWeight() {
+        return Math2.clone(finalWeight);
+    }
 
-        transmitInformation(information);
-        return null;
+    public double[] getFinalBiais() {
+        return Math2.clone(finalBiais);
     }
 
     /**
@@ -82,37 +114,69 @@ public final class Brain implements Thinkable {
      *
      * @param information information like vision or else.
      */
-    private void transmitInformation(Double[] information){
-        //if(information.length != height)
-        //    throw new IllegalArgumentException();
+    private double transmitInformation(double[] information){
+        if(information.length != height)
+            throw new IllegalArgumentException();
 
+        double[][] value = new double[2][height];
         // Set the first column of the matrice.
-
+        value[0] = information;
 
         // Transmit the data to the next column
-    }
+        for (int i = 0; i < width; i++) {
+            transmitCol(i, value[i%2], value[(i+1)%2]);
+        }
 
-    /**
-     * Transmit the data from the last column to the output
-     */
-    private void transmitLastColumn(){
+        return transmitLastColumn(value[width%2]);
     }
-
+    
     /**
-     * Transmit the data from one coloumn to the next one
+     * Transmit the data from one column to the next one
      * @param fromCol start column.
      */
-    private void transmitCol(int fromCol){
+    private void transmitCol(int fromCol, double[] fromColumn, double[] toColumn){
+        if(!(fromColumn.length == toColumn.length &&
+            fromColumn.length == height &&
+            0 <= fromCol && fromCol < width))
+                    throw new IllegalArgumentException();
+        
+        for (int i = 0; i < height; i++) {
+            double actualBiais = biais[fromCol][i];
+            double z = calculZ(weight[fromCol], fromColumn, i, actualBiais);
+            System.out.println("z " + z);
+            toColumn[i] = z;
+        }
+        
     }
 
-    /**
-     * Calculate the value for the next neurone.
-     *
-     * @param fromCol from column.
-     * @param toRow to row.
-     * @return x*w+b
-     */
-    private double transmitCell(int fromCol, int toRow){
-        return 0;
+    private double calculZ(double[][] weightColumn, double[] value, int fromCol, double biais) {
+        double nextValue = 0;
+        for (int i = 0; i < height; i++) {
+            double a = value[i];
+            double b = weightColumn[i][fromCol];
+            System.out.println("a*b " + a + " " + b);
+            nextValue += a * b;
+        }
+
+        System.out.println("nextValue " + nextValue);
+        nextValue+= biais;
+        System.out.println("biais " + biais);
+        return 1 / (1 + Math.exp(-nextValue));
+    }
+
+
+    private double transmitLastColumn(double[] lastColumn){
+        double nextValue = 0;
+        for (int i = 0; i < lastColumn.length; i++) {
+            System.out.println("final a*b " + lastColumn[i] + " " + finalWeight[0][i]);
+            nextValue += lastColumn[i] * finalWeight[0][i];
+        }
+        System.out.println("finalBiais " + finalBiais[0]);
+        nextValue += finalBiais[0];
+        return 1 / (1+ Math.exp(-nextValue));
+    }
+
+    public double testBrain(double[] information){
+        return transmitInformation(information);
     }
 }
