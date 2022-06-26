@@ -54,4 +54,19 @@ class BrainTest {
         assertEquals(0.76111, answer, 1e-4);
     }
 
+    @Test
+    void concreteExample2(){
+        double[][] biais = {{0.7, 0.6}, {0.2, 0.5}};
+        double[] finalBiais = {0.3};
+
+        double[][][] weight = new double[][][]{{
+                {0.8, 0.7}, {1.3, 1.2}},
+                {{0.1, 0.4}, {0.2, 0.7}}};
+        double[][] finalWeight = new double[][]{{0.4, 0.5}};
+
+        Brain brain = new Brain(weight, biais, finalWeight, finalBiais);
+        double answer = brain.testBrain(new double[]{0.8, 0.4});
+
+        assertEquals(0.7207684146, answer, 1e-9);
+    }
 }
