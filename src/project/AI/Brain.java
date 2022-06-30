@@ -17,8 +17,6 @@ public final class Brain implements Thinkable {
     public Action nextAction(double[] information) {
         double vertical = brainPartVertical.testBrain(information);
         double horizontal = brainPartHorizontal.testBrain(information);
-        System.out.println("vertical " + vertical);
-        System.out.println("horizontal " + horizontal);
 
         if(Math.abs(horizontal - 0.5) >= Math.abs(vertical - 0.5)){
             // Horizontale
@@ -61,12 +59,18 @@ public final class Brain implements Thinkable {
         this(brain.getPartBrainHorizontal(), brain.getPartBrainVertical());
     }
 
+
+    public void evolve(double speed){
+        this.brainPartHorizontal.evolve(speed);
+        this.brainPartVertical.evolve(speed);
+    }
+
     private BrainPart getPartBrainHorizontal(){
-        return brainPartHorizontal;
+        return new BrainPart(brainPartHorizontal);
     }
 
     private BrainPart getPartBrainVertical(){
-        return brainPartVertical;
+        return new BrainPart(brainPartVertical);
     }
 
 

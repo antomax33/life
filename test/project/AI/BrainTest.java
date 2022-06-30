@@ -1,8 +1,10 @@
 package project.AI;
 
 import project.life.Action;
-import project.matrix.MatrixUtil;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BrainTest {
@@ -37,6 +39,60 @@ class BrainTest {
 
         double[][][] c = Math2.randomArray(5,3,7);
         Math2.printArray(c, "c");
+    }
+
+
+    @Test
+    void cloneDifferent(){
+        Brain a = new Brain(3,2);
+        Brain b = new Brain(a);
+        Random r = new Random(System.currentTimeMillis());
+
+        boolean different = false;
+        int i = 0;
+        while (i<100 && !different){
+            System.out.println(i);
+
+            b.evolve(0.1);
+            double[] information = {r.nextGaussian(), r.nextGaussian(), r.nextGaussian()};
+
+            Action actionA = a.nextAction(information);
+            Action actionB = b.nextAction(information);
+            if(actionA != actionB){
+                different = true;
+            }
+
+            i++;
+        }
+
+        assertTrue(different);
+
+    }
+
+
+    @Test
+    void evolve(){
+        Brain brain = new Brain(3,4);
+        Random random = new Random(System.currentTimeMillis());
+
+        double[] information = new double[]{random.nextGaussian(), random.nextGaussian(),
+                random.nextGaussian()};
+
+        Action notExpected = brain.nextAction(information);
+        System.out.println(notExpected);
+
+        int i=0;
+        boolean identique = true;
+        while (i < 1000 && identique){
+            brain.evolve(0.1);
+            Action newAction = brain.nextAction(information);
+            System.out.println(newAction);
+
+            if(newAction != notExpected) identique=false;
+
+            i++;
+        }
+
     }
 
 }
