@@ -34,6 +34,11 @@ public final class Position{
         return false;
     }
 
+    @Override
+    public String toString(){
+        return "(" + x + ", " + y + ")";
+    }
+
     /**
      * Copy the position.
      *
@@ -41,5 +46,9 @@ public final class Position{
      */
     public Position copy(){
         return new Position(board, x,y);
+    }
+
+    public Board getBoard(){
+        return board;
     }
 }

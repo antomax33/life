@@ -4,8 +4,8 @@ import project.GUI.Draw;
 import javafx.scene.layout.Pane;
 
 
-public abstract class Game implements Draw {
+public abstract class Game {
 
-    public abstract void step();
+    public abstract boolean step();
     public abstract Pane pane();
 }

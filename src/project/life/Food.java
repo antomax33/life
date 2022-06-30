@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleObjectProperty;
 
 public abstract class Food extends Piece {
     private final int energiesWhenEaten;
-    public Food (SimpleObjectProperty<Position> positionProperty, int energies){
-        super(positionProperty);
+    public Food (int energies, Position position){
+        super(position);
         this.energiesWhenEaten = energies;
     }
 
