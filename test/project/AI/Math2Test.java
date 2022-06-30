@@ -28,4 +28,35 @@ class Math2Test {
 
         assertEquals(e[0] + 1, f[0]);
     }
+
+
+    @Test
+    void Math2TestClone(){
+        double[] a = Math2.randomArray(3);
+        double[] b = Math2.clone(a);
+
+        for (int i = 0; i < a.length; i++) {
+            assertEquals(a[i], b[i]);
+        }
+        double[][] c = Math2.randomArray(3, 4);
+        double[][] d = Math2.clone(c);
+
+        for (int i = 0; i < c.length; i++) {
+            for (int j = 0; j < c[0].length; j++) {
+                assertEquals(c[i][j], d[i][j]);
+
+            }
+        }
+
+        double[][][] e = Math2.randomArray(3, 4, 5);
+        double[][][] f = Math2.clone(e);
+
+        for (int i = 0; i < c.length; i++) {
+            for (int j = 0; j < c[0].length; j++) {
+                for (int k = 0; k < e[0][0].length; k++) {
+                    assertEquals(e[i][j][k], f[i][j][k]);
+                }
+            }
+        }
+    }
 }

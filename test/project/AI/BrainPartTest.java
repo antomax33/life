@@ -2,9 +2,61 @@ package project.AI;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BrainPartTest {
+
+
+    @Test
+    void cloneTest(){
+        BrainPart bp = new BrainPart(3,5);
+        BrainPart bpClone = new BrainPart(bp);
+
+        for (int i = 0; i < 30; i++) {
+            double[] information = Math2.randomArray(3);
+
+            assertEquals(bp.testBrain(information), bpClone.testBrain(information));
+        }
+    }
+
+    @Test
+    void modifiedCloneTest(){
+        int height = 5;
+        int width = 3;
+        BrainPart bp = new BrainPart(height,width);
+        BrainPart bpClone = new BrainPart(bp);
+        bpClone.evolve(0.3);
+
+        for (int i = 0; i < 30; i++) {
+            double[] information = Math2.randomArray(height);
+            assertNotEquals(bp.testBrain(information), bpClone.testBrain(information));
+        }
+
+        Random random = new Random(System.currentTimeMillis());
+        for (int i = 0; i < 30; i++) {
+            int w = random.nextInt(width);
+            int h1 = random.nextInt(height);
+            int h2 = random.nextInt(height);
+            assertNotEquals(bp.getWeights()[w][h1][h2],
+                    bpClone.getWeights()[w][h1][h2]);
+
+
+            assertNotEquals(bp.getBiais()[w][h1],
+                    bpClone.getBiais()[w][h1]);
+
+
+            assertNotEquals(bp.getFinalWeight()[w][h1],
+                    bpClone.getFinalWeight()[w][h1]);
+
+
+            assertNotEquals(bp.getFinalBiais(),
+                        bpClone.getFinalBiais());
+
+        }
+
+    }
 
     @Test
     void concreteExample(){

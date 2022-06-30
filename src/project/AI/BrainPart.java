@@ -1,5 +1,7 @@
 package project.AI;
 
+import java.util.Random;
+
 public final class BrainPart {
 
     private final int height;
@@ -97,6 +99,34 @@ public final class BrainPart {
         return Math2.clone(finalBiais);
     }
 
+    public void evolve(double speed){
+        Random random = new Random(System.currentTimeMillis());
+
+        evolve(speed, weight, random);
+        evolve(speed, finalWeight, random);
+
+        evolve(speed, biais, random);
+        evolve(speed, finalBiais, random);
+    }
+
+
+    private void evolve(double speed, double[][][] array, Random random){
+        for (double[][] doubles : array) {
+            evolve(speed, doubles, random);
+        }
+    }
+
+    private void evolve(double speed, double[][] array, Random random){
+        for (double[] doubles : array) {
+            evolve(speed, doubles, random);
+        }
+    }
+
+    private void evolve(double speed, double[] array, Random random){
+        for (int i = 0; i < array.length; i++) {
+            array[i] += speed * random.nextGaussian();
+        }
+    }
     /**
      * Transmit the information from the input to the output.
      *
@@ -108,7 +138,7 @@ public final class BrainPart {
 
         double[][] value = new double[2][height];
         // Set the first column of the matrice.
-        value[0] = information;
+        value[0] = information.clone();
 
         // Transmit the data to the next column
         for (int i = 0; i < width; i++) {

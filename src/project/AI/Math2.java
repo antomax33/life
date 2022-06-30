@@ -22,7 +22,7 @@ public class Math2 {
     }
 
     public static double[][] randomArray(int size1, int size2){
-        double array[][] = new double[size1][size2];
+        double[][] array = new double[size1][size2];
         for (int i = 0; i < size1; i++) {
             array[i] = randomArray(size2);
         }
@@ -30,7 +30,7 @@ public class Math2 {
     }
 
     public static double[][][] randomArray(int size1, int size2, int size3){
-        double array[][][] = new double[size1][size2][size3];
+        double[][][] array = new double[size1][size2][size3];
         for (int i = 0; i < size1; i++) {
             array[i] = randomArray(size2, size3);
         }
