@@ -8,4 +8,6 @@ public abstract class Monster extends Piece{
         super(position);
     }
 
+    public abstract Monster clone(Position position);
+    public abstract void evolve(double speed);
 }

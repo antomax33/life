@@ -45,15 +45,11 @@ public abstract class Neurone {
         value=amount;
     }
     public void add(double x){
-        //System.out.println("x " + x);
         double newX = x + value;
         value = Math2.clamp(MIN_VALUE_INFORMATION, newX, MAX_VALUE_INFORMATION);
-        //System.out.println("value2 " + value);
     }
     public void send(){
         for (Link link : links) {
-            //System.out.println("amount " + link.amount);
-            //System.out.println("value " + value);
             link.neurone.add(value*link.amount);
         }
     }

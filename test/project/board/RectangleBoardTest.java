@@ -8,7 +8,7 @@ class RectangleBoardTest {
 
     @Test
     void classique(){
-        RectangleBoard board = new RectangleBoard(100,100);
+        RectangleBoard board = new RectangleBoard(100,100, 0);
         Position position = new Position(board, 25, 50);
         assertTrue(position.move(10, 20));
 
@@ -19,12 +19,12 @@ class RectangleBoardTest {
     @Test
     void depassement(){
         assertThrows(IllegalArgumentException.class, () ->
-                new RectangleBoard(-5, 2));
+                new RectangleBoard(-5, 2, 0));
 
         assertThrows(IllegalArgumentException.class, () ->
-                new RectangleBoard(5, -2));
+                new RectangleBoard(5, -2, 0));
 
-        Board board = new RectangleBoard(10, 10);
+        Board board = new RectangleBoard(10, 10, 0);
 
         assertThrows(IllegalArgumentException.class, () ->
                 new Position(board, -3, 2));

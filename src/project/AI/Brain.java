@@ -33,7 +33,7 @@ public final class Brain implements Thinkable {
      * @param height number of information given.
      * @param width width of the machine learning.
      */
-    public Brain (int height, int width){
+    public Brain(int height, int width){
         this(new BrainPart(height, width), new BrainPart(height, width));
     }
 

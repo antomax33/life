@@ -9,9 +9,16 @@ import java.util.Random;
 public class RectangleBoard extends Board{
     private final int width;
     private final int height;
-    private final Random random = new Random(0);
 
-    public RectangleBoard(int width, int height){
+    /**
+     * Create a rectangle board of width and height given.
+     * From 0 include to value not include
+     *
+     * @param width of the board.
+     * @param height of the board.
+     */
+    public RectangleBoard(int width, int height, int seed){
+        super(seed);
         if(width <= 0 || height <= 0) throw new IllegalArgumentException();
         this.width = width;
         this.height = height;
@@ -59,10 +66,24 @@ public class RectangleBoard extends Board{
             this.maxY = maxY;
         }
 
+        /**
+         * An interval of 1 case on a rectangle board
+         *
+         * @param x position
+         * @param y position
+         */
+        public IntervalRectangle(int x, int y){
+            this.minX = x;
+            this.maxX = x;
+
+            this.minY = y;
+            this.maxY = y;
+        }
+
         public boolean inside(Position position){
             int x = position.getX();
             int y = position.getY();
-            return (minX <= x && y <= maxX &&
+            return (minX <= x && x <= maxX &&
                 minY <= y && y <= maxY);
         }
     }

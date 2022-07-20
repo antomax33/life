@@ -9,12 +9,24 @@ public class understandTest {
     @Test
     void a(){
 
-        double[][][] a = Math2.randomArray(5, 2, 3);
-
-        Math2.printArray(a, "a");
-        Math2.printArray(a[0], "a[0]");
-        System.out.println(a.length);
-        System.out.println(a[0].length);
-        System.out.println(a[0][0].length);
+        for (int i = 0; i <10000; i++) {
+            Math.log(i);
+        }
     }
+
+    @Test
+    void b(){
+
+        for (int i = 0; i <10000; i++) {
+            Math.log1p(i);
+        }
+    }
+    @Test
+    void c(){
+
+        for (int i = 0; i <10000; i++) {
+            Math.log10(i);
+        }
+    }
+
 }

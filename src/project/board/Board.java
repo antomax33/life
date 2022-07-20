@@ -4,13 +4,18 @@ import project.life.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Board {
 
+    protected Random random;
     protected final List<Piece> pieces;
-
-    protected Board(){
+    private final int seed;
+    //TODO change arraylist by set
+    protected Board(int seed){
         this.pieces = new ArrayList<>();
+        this.seed = seed;
+        random = new Random(seed);
     }
 
     public void addPiece(Piece piece){pieces.add(piece);}
@@ -26,5 +31,13 @@ public abstract class Board {
         }
 
         return piecesInsideInterval;
+    }
+
+    public List<Piece> getPiece(Position position){
+        return getPiece(new RectangleBoard.IntervalRectangle(position.getX(), position.getY()));
+    }
+
+    public void setSeed(int seed){
+        random = new Random(seed);
     }
 }

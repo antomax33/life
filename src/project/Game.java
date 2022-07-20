@@ -6,6 +6,18 @@ import javafx.scene.layout.Pane;
 
 public abstract class Game {
 
-    public abstract boolean step();
+    protected final int maxStep;
+    protected int step = 0;
+
+    protected Game(int maxStep){
+        this.maxStep = maxStep;
+    }
+
+    public abstract double getScore();
+
+    public boolean step(){
+        step++;
+        return step <= maxStep;
+    }
     public abstract Pane pane();
 }

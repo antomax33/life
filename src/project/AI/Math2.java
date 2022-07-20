@@ -6,7 +6,7 @@ import java.util.StringJoiner;
 
 public class Math2 {
 
-    public final static Random random = new Random(0);
+    public final static Random random = new Random(System.currentTimeMillis());
     public static double clamp(double min, double value, double max){
         if(value <= min){return min;}
         return Math.min(value, max);

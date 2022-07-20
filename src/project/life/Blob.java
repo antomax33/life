@@ -38,6 +38,10 @@ public class Blob extends Monster{
         return "blob " + super.toString();
     }
 
+    @Override
+    public void evolve(double speed){
+        brain.evolve(speed);
+    }
 
     private void move(){
         Intervale intervale = new RectangleBoard.IntervalRectangle(
@@ -61,9 +65,7 @@ public class Blob extends Monster{
             if(y <= -x && y >= x) information[3]+=1;
         }
 
-        Math2.printArray(information, "info");
         Action action = brain.nextAction(information);
-        System.out.println(action);
         switch (action){
             case MOVE_LEFT -> moveLeft();
             case MOVE_DOWN -> moveDown();
@@ -72,4 +74,8 @@ public class Blob extends Monster{
         }
     }
 
+    @Override
+    public Blob clone(Position position) {
+        return new Blob(new Brain(brain), position);
+    }
 }
