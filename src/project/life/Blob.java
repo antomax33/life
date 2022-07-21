@@ -75,7 +75,7 @@ public class Blob extends Monster{
     }
 
     @Override
-    public Blob clone(Position position) {
-        return new Blob(new Brain(brain), position);
+    public Blob clone() {
+        return new Blob(new Brain(brain), position.copy());
     }
 }

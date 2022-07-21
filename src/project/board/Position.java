@@ -34,6 +34,13 @@ public final class Position{
         return false;
     }
 
+    public void setPosition(int x, int y){
+        if(!board.inside(x, y)) throw new IllegalArgumentException();
+        this.x = x;
+        this.y = y;
+    }
+
+
     @Override
     public String toString(){
         return "(" + x + ", " + y + ")";

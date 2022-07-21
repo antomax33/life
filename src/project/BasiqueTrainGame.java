@@ -42,6 +42,14 @@ public class BasiqueTrainGame extends Game {
     }
 
     @Override
+    public double autoGame() {
+        for (int i = 0; i < maxStep; i++) {
+            step();
+        }
+        return score;
+    }
+
+    @Override
     public double getScore(){
         return score;
     }

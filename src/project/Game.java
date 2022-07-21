@@ -20,4 +20,6 @@ public abstract class Game {
         return step <= maxStep;
     }
     public abstract Pane pane();
+
+    public abstract double autoGame();
 }

@@ -1,5 +1,6 @@
 package project.life;
 
+import project.board.Board;
 import project.board.Position;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -7,7 +8,7 @@ import javafx.beans.property.SimpleObjectProperty;
  * Concrete object on the project.board.
  */
 public abstract class Piece {
-    protected final Position position;
+    protected Position position;
     protected Piece(Position position){
         this.position = position;
     }
@@ -62,5 +63,9 @@ public abstract class Piece {
 
     public boolean step(){
         return true;
+    }
+
+    public void changeBoard(Position position){
+        this.position = position;
     }
 }
