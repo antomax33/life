@@ -13,7 +13,7 @@ import project.life.Monster;
 public class train {
 
     private final static int NUMBER_MONSTER = 200;
-    private final double SPEED_EVOLVE = 1;
+    private final double SPEED_EVOLVE = 0.5;
     private final int ROUNDS = 30;
     private final int NUMBER_OF_MAPS = 100;
     private final int WIDTH = 101;
